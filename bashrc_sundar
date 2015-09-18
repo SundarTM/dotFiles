@@ -1,0 +1,89 @@
+#
+# ~/.bashrc_sundar
+#
+
+export EDITOR=vim
+export PATH=$PATH:${WS}/myApps/bin
+
+alias ls='ls --color=auto'
+PS1='[\u@\h:\w]> '
+
+alias thun='cd ${WS}'
+
+alias csc="${WS}/scripts/mk_cscope"
+alias xstartx="${WS}/scripts/xstartx"
+alias vg="valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes --show-reachable=yes --log-file=leaks.txt"
+
+[ -z "$TMUX" ] && export TERM=xterm-256color
+
+takeBackup ()
+{
+  EXIT_ON_ERROR=1
+  BACKUP_PREPEND_PATH=${WS}/patches
+  EXTRA_TAR_FILE_NAME=extra.tar
+  PATCH_FILE_NAME=patchFile
+
+# Generate the time stamp based directory to store this.
+  if [ -z $1 ]; then
+    GEN_DIR=`date | sed 's/ /_/g' | sed 's/\:/_/g'`
+  else
+    GEN_DIR=$1
+  fi
+  BACKUP_DIR=$BACKUP_PREPEND_PATH/$GEN_DIR
+
+  mkdir $BACKUP_DIR
+  if [ $? -ne 0 ] ; then
+    echo "Trouble in creating $BACKUP_DIR"
+    return $EXIT_ON_ERROR
+  fi
+
+  no_of_files=`git ls-files --exclude-standard -om | wc -l`
+  if [ $no_of_files -eq 0 ] ; then
+    echo "No edited files!!"
+    return $EXIT_ON_ERROR
+  fi
+
+  files_to_backup=`git ls-files --exclude-standard -m`
+  echo -e "Files being backed up up are:\n$files_to_backup\n"
+
+  extra_files=`git ls-files --exclude-standard -o`
+  echo -e "Extra files being backed up up are:\n$extra_files\n"
+  echo -n "Tarring files.. "
+  tar cf $BACKUP_DIR/$CHANGED_TAR_FILE_NAME $files_to_backup
+  tar cf $BACKUP_DIR/$EXTRA_TAR_FILE_NAME $extra_files
+  echo "Done"
+
+  echo -n "Creating patch file.. "
+  git diff > $BACKUP_DIR/$PATCH_FILE_NAME
+  echo "Done"
+
+  echo -e "\nBackup taken in $BACKUP_DIR  Be happy :)"
+}
+# --------------------------------------------------------------------------------------------------------------------------
+# Pacman aliases 
+alias pacupd='sudo pacman -Syu'   # Synchronize with repositories and then upgrade packages that are out of date on the local system.
+alias pacins='sudo pacman -S'    # Install specific package(s) from the repositories
+alias pacrem='sudo pacman -Rns'   # Remove the specified package(s), its configuration(s) and unneeded dependencies
+alias pacinfo='pacman -Si'   # Display information about a given package in the repositories
+alias pacsearch='pacman -Ss'    # Search for package(s) in the repositories
+alias pacloc='pacman -Qi'   # Display information about a given package in the local database
+alias paclo="pacman -Qdt"   # List all packages which are orphaned
+
+# '[r]emove [o]rphans' - recursively remove ALL orphaned packages
+alias pacro="pacman -Qtdq > /dev/null && sudo pacman -Rns \$(pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')"
+
+alias pacmir='sudo pacman -Syy'                    # Force refresh of all package lists after updating /etc/pacman.d/mirrorlist
+#alias paclf="pacman -Ql"    # List all files installed by a given package
+#alias pacins='sudo pacman -U'   # Install specific package not from the repositories but from a file 
+#alias pacre='sudo pacman -R'    # Remove the specified package(s), retaining its configuration(s) and required dependencies
+#alias paclocs='pacman -Qs'    # Search for package(s) in the local database
+#alias pacc="sudo pacman -Scc"   # Clean cache - delete all not currently installed package files
+#alias pacexpl="pacman -D --asexp" # Mark one or more installed packages as explicitly installed 
+#alias pacimpl="pacman -D --asdep" # Mark one or more installed packages as non explicitly installed
+# --------------------------------------------------------------------------------------------------------------------------
+
+shopt -s histappend
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTCONTROL=ignoredups:erasedups
+ 
