@@ -39,6 +39,7 @@ Return a list of installed packages or nil for every skipped package."
 				'evil-org
 				'relative-line-numbers
         'smooth-scrolling
+				'evil-anzu
         'helm
 				'helm-swoop
 				'volatile-highlights
@@ -149,6 +150,10 @@ Return a list of installed packages or nil for every skipped package."
 (require 'smooth-scrolling)
 (setq smooth-scroll-margin 5)
 (setq apropos-do-all t)
+
+(with-eval-after-load 'evil
+  (require 'evil-anzu))
+;(global-anzu-mode +1)
 
 (setq-default tab-width 2)
 
