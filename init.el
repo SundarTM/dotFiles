@@ -31,7 +31,6 @@ Return a list of installed packages or nil for every skipped package."
 ;; Activate installed packages
 (package-initialize)
 
-;; Assuming you wish to install "iedit" and "magit"
 (ensure-package-installed 
         'evil
 			  'evil-jumper
@@ -42,6 +41,7 @@ Return a list of installed packages or nil for every skipped package."
 				'evil-anzu
         'helm
 				'helm-swoop
+				'guide-key
 				'volatile-highlights
         'rainbow-delimiters
 				'powerline
@@ -55,7 +55,9 @@ Return a list of installed packages or nil for every skipped package."
 				'ace-window
 				'expand-region
 				'multiple-cursors
-				;'ranger
+				'projectile
+				'helm-projectile
+				'magit
         )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -67,13 +69,17 @@ Return a list of installed packages or nil for every skipped package."
 
 ;;evil and evil related----------------------------------------------------------
 (require 'evil-leader)
+(global-evil-leader-mode)
+(setq evil-leader/in-all-states t)
+(evil-leader/set-leader "SPC")
 (evil-leader/set-key
    "b" 'helm-mini
    "f" 'helm-find-files
    "e" 'eval-last-sexp
    "r" 'eval-buffer
 	 "j" 'helm-imenu
-   "h" 'helm-apropos
+   "hh" 'helm-apropos
+   "hk" 'describe-key
    "x" 'helm-M-x
    "k" 'helm-filtered-bookmarks
 	 "m" 'evil-show-registers
@@ -85,7 +91,10 @@ Return a list of installed packages or nil for every skipped package."
 	 "O" 'helm-multi-swoop-org
 	 "so" 'helm-multi-swoop-all
 	 "u" 'undo-tree-visualize
-   ;"p" 'reserved-projectile
+   "pp" 'helm-projectile-switch-project
+	 "pf" 'helm-projectile-find-file
+	 "po" 'helm-projectile-find-file-in-known-projects
+
 	 ;"t" 'helm-etags-select -- also with helm-find-files
 	 "y" 'helm-show-kill-ring
    )
@@ -100,26 +109,30 @@ Return a list of installed packages or nil for every skipped package."
 (cl-loop for (mode . state) in
 				 '(
 ;           (dired-mode . emacs)
+           (wdired-mode . emacs)
           )
           do (evil-set-initial-state mode state))
-(global-evil-leader-mode)
 (define-key evil-ex-completion-map "\C-r" #'evil-paste-from-register)
 
+;;-----------------------------------------------------------------------------
+(require 'guide-key)
+(setq guide-key/guide-key-sequence t)
+;(guide-key-mode 1)  ; Enable guide-key-mode
 
 (require 'powerline)
 (setq powerline-color1 "grey22")
 (setq powerline-color2 "grey40")
 (powerline-default-theme)
 
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;(require 'multiple-cursors)
+;(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (require 'evil)
 (evil-mode t)
-(define-key evil-motion-state-map (kbd "SPC") 'evil-ace-jump-word-mode)
+;(define-key evil-motion-state-map (kbd "SPC") 'evil-ace-jump-word-mode)
 (define-key evil-motion-state-map (kbd "F") 'evil-ace-jump-char-mode)
 (define-key evil-motion-state-map (kbd "T") 'evil-ace-jump-char-to-mode)
 
@@ -130,17 +143,32 @@ Return a list of installed packages or nil for every skipped package."
 (require 'evil-jumper)
 (global-evil-jumper-mode)
 (define-key evil-normal-state-map (kbd "C-i") 'evil-jumper/forward)
-(require 'evil-org)
+;(require 'evil-org)
+
+;org related
 (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)))
+
+(add-hook 'org-mode-hook 
+        (lambda () (relative-line-numbers-mode -1)))
+
+;; prevent demoting heading also shifting text inside sections
+(setq org-adapt-indentation nil)
+
 ;;; esc quits
 ;(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(ensure-package-installed 
+				'ranger
+				;'evil-space
+ )
 ;(require 'ranger)
 ;(ranger-mode t)
 ;dired-toggle-read-only
 
+;(require 'evil-space)
+;(evil-space-mode)
 
 ;;vim like behaviours
 (global-relative-line-numbers-mode)
@@ -171,8 +199,6 @@ Return a list of installed packages or nil for every skipped package."
 (scroll-bar-mode -1)
 (set-fringe-mode '(0 . 0))
 
-(add-hook 'org-mode-hook 
-        (lambda () (relative-line-numbers-mode -1)))
 
 (setq inhibit-startup-message t
 inhibit-startup-echo-area-message t) 
@@ -198,12 +224,20 @@ inhibit-startup-echo-area-message t)
 (require 'helm-config)
 (helm-mode 1)
 
-;; prevent demoting heading also shifting text inside sections
-(setq org-adapt-indentation nil)
+;; Projectile
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+
 (setq undo-tree-visualizer-diff t)
 
 (setq debug-on-error t)
 
+;(add-hook 'prog-mode-hook 'subword-mode)
+;(which-function-mode t)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+;;;;;;;;;;;;;; Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun visit-term-buffer ()
   "Create or visit a terminal buffer."
   (interactive)
@@ -251,9 +285,93 @@ Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
     )
   )
 
-;;set this to M-c
-(global-set-key "\M-c" 'toggle-letter-case)
+;;Set this to M-u
+(global-set-key "\M-u" 'toggle-letter-case)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun sudo-edit (&optional arg)
+"Edit currently visited file as root.
+With a prefix ARG prompt for a file to visit.
+Will also prompt for a file to visit if current
+buffer is not visiting a file."
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root): ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+;(global-set-key (kbd "C-x C-r") 'sudo-edit)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; set key for agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+;;file to save todo items
+(setq org-agenda-files (quote ("/Users/bjm/todo.org")))
+
+;;set priority range from A to C with default A
+(setq org-highest-priority ?A)
+(setq org-lowest-priority ?C)
+(setq org-default-priority ?A)
+
+;;set colours for priorities
+(setq org-priority-faces '((?A . (:foreground "#F0DFAF" :weight bold))
+                           (?B . (:foreground "LightSteelBlue"))
+                           (?C . (:foreground "OliveDrab"))))
+
+;;open agenda in current window
+(setq org-agenda-window-setup (quote current-window))
+
+;;capture todo items using C-c c t
+(define-key global-map (kbd "C-c c") 'org-capture)
+(setq org-capture-templates
+      '(("t" "todo" entry (file+headline "/Users/bjm/todo.org" "Tasks")
+         "* TODO [#A] %?")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; function to wrap blocks of text in org templates                       ;;
+;; e.g. latex or src etc                                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun org-begin-template ()
+  "Make a template at point."
+  (interactive)
+  (if (org-at-table-p)
+      (call-interactively 'org-table-rotate-recalc-marks)
+    (let* ((choices '(("s" . "SRC")
+                      ("e" . "EXAMPLE")
+                      ("q" . "QUOTE")
+                      ("v" . "VERSE")
+                      ("c" . "CENTER")
+                      ("l" . "LaTeX")
+                      ("h" . "HTML")
+                      ("a" . "ASCII")))
+           (key
+            (key-description
+             (vector
+              (read-key
+               (concat (propertize "Template type: " 'face 'minibuffer-prompt)
+                       (mapconcat (lambda (choice)
+                                    (concat (propertize (car choice) 'face 'font-lock-type-face)
+                                            ": "
+                                            (cdr choice)))
+                                  choices
+                                  ", ")))))))
+      (let ((result (assoc key choices)))
+        (when result
+          (let ((choice (cdr result)))
+            (cond
+             ((region-active-p)
+              (let ((start (region-beginning))
+                    (end (region-end)))
+                (goto-char end)
+                (insert "#+END_" choice "\n")
+                (goto-char start)
+                (insert "#+BEGIN_" choice "\n")))
+             (t
+              (insert "#+BEGIN_" choice "\n")
+              (save-excursion (insert "#+END_" choice))))))))))
+
+;;bind to key
+(define-key org-mode-map (kbd "C-<") 'org-begin-template)
+
  ;'(initial-frame-alist (quote ((fullscreen . maximized)))) ;;in customSet
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -278,3 +396,11 @@ Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
 (setq wg-prefix-key (kbd "\C-a"))
 
 ;(workgroups-mode 1)
+(put 'narrow-to-region 'disabled nil)
+
+
+
+
+
+;;;;Mac Specific
+(add-to-list 'exec-path "/usr/local/bin/")
