@@ -1,17 +1,19 @@
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rsi' 
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-unimpaired'
-Plug 'sjl/gundo.vim'
-Plug 'wellle/targets.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+ Plug 'git://github.com/tpope/vim-fugitive'
+ Plug 'git://github.com/tpope/vim-surround'
+ Plug 'git://github.com/tpope/vim-rsi' 
+ Plug 'git://github.com/tpope/vim-repeat'
+ Plug 'git://github.com/tpope/vim-commentary'
+ Plug 'git://github.com/tpope/vim-unimpaired'
+ Plug 'git://github.com/sjl/gundo.vim'
+ Plug 'git://github.com/wellle/targets.vim'
+ Plug 'git://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+ Plug 'git://github.com/junegunn/fzf.vim'
+ Plug 'git://github.com/altercation/vim-colors-solarized'
 call plug#end()
 
 let g:rsi_no_meta = 1
+"let g:solarized_termcolors=256
 
 "Tab related
 set tabstop=2
@@ -68,6 +70,15 @@ nnoremap <Leader>du :diffupdate<CR>
 nnoremap <Leader>fs :Ag! <C-R>=expand("<cword>")<CR><CR>	
 nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>	
 
+nnoremap <Leader>ca :cs add cscope.out<CR>
+nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>cc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>ce :cs find e <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>cf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nnoremap <Leader>ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nnoremap <Leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 set relativenumber
 set number
@@ -75,5 +86,8 @@ set number
 "windo set scrollbind
 "windo set noscrollbind
 "nmap <F5> :windo set scrollbind!<cr>
+
+"Slow start time in terminal - X11 clipboard
+set clipboard=exclude:.*
 
 filetype plugin on 
