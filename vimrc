@@ -49,6 +49,9 @@ if has('gui_running')
   set guioptions-=m  "remove menu bar
   set guioptions-=T  "remove toolbar
   set guioptions-=r  "remove right scroll bar
+else
+  set background=dark
+  colorscheme solarized 
 endif
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -70,6 +73,14 @@ nnoremap <Leader>du :diffupdate<CR>
 nnoremap <Leader>fs :Ag! <C-R>=expand("<cword>")<CR><CR>	
 nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>	
 
+"   's'   symbol: find all references to the token under cursor
+"   'g'   global: find global definition(s) of the token under cursor
+"   'c'   calls:  find all calls to the function name under cursor
+"   't'   text:   find all instances of the text under cursor
+"   'e'   egrep:  egrep search for the word under cursor
+"   'f'   file:   open the filename under cursor
+"   'i'   includes: find files that include the filename under cursor
+"   'd'   called: find functions that function under cursor calls
 nnoremap <Leader>ca :cs add cscope.out<CR>
 nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -80,8 +91,8 @@ nnoremap <Leader>cf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <Leader>ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nnoremap <Leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
 
-set relativenumber
 set number
+set relativenumber
 
 "windo set scrollbind
 "windo set noscrollbind
