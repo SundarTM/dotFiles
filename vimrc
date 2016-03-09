@@ -1,5 +1,6 @@
 call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/tpope/vim-fugitive'
+ Plug 'git://github.com/tpope/vim-repeat'
  Plug 'git://github.com/tpope/vim-surround'
  Plug 'git://github.com/tpope/vim-rsi' 
  Plug 'git://github.com/tpope/vim-repeat'
@@ -9,7 +10,12 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/wellle/targets.vim'
  Plug 'git://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  Plug 'git://github.com/junegunn/fzf.vim'
+ Plug 'git://github.com/rbgrouleff/bclose.vim'
+
  Plug 'git://github.com/altercation/vim-colors-solarized'
+ 
+ Plug 'git://github.com/chrisbra/NrrwRgn'
+ Plug 'git://github.com/wellle/targets.vim'
 call plug#end()
 
 let g:rsi_no_meta = 1
@@ -62,6 +68,15 @@ cmap w!! w !sudo tee > /dev/null %
 map <SPACE> <Leader>
 
 nnoremap <Leader>u :GundoToggle<CR>
+
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>e :Files 
+nnoremap <Leader>p :GitFiles<CR>
+nnoremap <Leader>x :Commands<CR>
+nnoremap <Leader>m :Marks<CR>
+nnoremap <Leader>r :source ~/.vimrc<CR>
+nnoremap <Leader>w :bdelete<CR>
+nnoremap <Leader>q :Bclose<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>

@@ -51,7 +51,7 @@ bindkey -m ^B stuff "g/e^["
 # Clear scrollback buffer using Ctrl-Alt-H
 bindkey ^[^H eval "scrollback 0" "scrollback 30000"
 
+term screen-256color
 #to enable mouse in screenrc
-#term xterm-color
 #termcapinfo xterm-color|rxvt ti@:te@
 #set ttymouse=xterm2
