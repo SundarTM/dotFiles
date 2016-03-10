@@ -8,6 +8,8 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/sjl/gundo.vim'
  Plug 'git://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  Plug 'git://github.com/junegunn/fzf.vim'
+ Plug 'git://github.com/mileszs/ack.vim'
+ Plug 'git://github.com/rking/ag.vim'
  Plug 'git://github.com/ConradIrwin/vim-bracketed-paste'
 
  Plug 'git://github.com/altercation/vim-colors-solarized'
@@ -23,6 +25,28 @@ call plug#end()
 let g:rsi_no_meta = 1
 let g:solarized_diffmode="high"
 "let g:solarized_termcolors=256
+
+function! DeleteHiddenBuffers()
+  "Tabs not cosidered. walks through entire Range
+  let tpbl=[]
+  let closed = 0
+  for buf in range(1, bufnr('$'))
+    if buflisted(buf) && (bufwinnr(buf) < 0)
+      "hidden buffer
+      silent execute 'bdelete' buf
+      let closed += 1
+    endif
+  endfor
+  echo "Closed ".closed." hidden buffers"
+endfunction
+
+function! FallBackToAckIfNoCscope(word)
+  if cscope_connection()
+    execute 'vertical scs f t' a:word
+  else
+    execute 'Ack' a:word
+  endif
+endfunction
 
 "Tab related
 set tabstop=2
@@ -88,6 +112,7 @@ nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gl :Glog<CR>
 
 nnoremap <Leader>du :diffupdate<CR>
+nnoremap <Leader>dh :call DeleteHiddenBuffers()<CR>
 
 nnoremap <Leader>fs :Ag! <C-R>=expand("<cword>")<CR><CR>	
 nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>	
@@ -101,6 +126,7 @@ nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>
 "   'i'   includes: find files that include the filename under cursor
 "   'd'   called: find functions that function under cursor calls
 nnoremap <Leader>ca :cs add cscope.out<CR>
+nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"))<CR><CR>
 nnoremap <Leader>cs :vertical scs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <Leader>cg :vertical scs find g <C-R>=expand("<cword>")<CR><CR>
 nnoremap <Leader>cc :vertical scs find c <C-R>=expand("<cword>")<CR><CR>
