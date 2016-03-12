@@ -5,6 +5,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/tpope/vim-rsi' 
  Plug 'git://github.com/tpope/vim-commentary'
  Plug 'git://github.com/tpope/vim-unimpaired'
+ Plug 'git://github.com/tpope/vim-dispatch'
  Plug 'git://github.com/sjl/gundo.vim'
  Plug 'git://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  Plug 'git://github.com/junegunn/fzf.vim'
