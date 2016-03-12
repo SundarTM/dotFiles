@@ -40,9 +40,13 @@ function! DeleteHiddenBuffers()
   echo "Closed ".closed." hidden buffers"
 endfunction
 
-function! FallBackToAckIfNoCscope(word)
+function! FallBackToAckIfNoCscope(word, openVertical)
   if cscope_connection()
-    execute 'vertical scs f t' a:word
+    if a:openVertical
+      execute 'vertical scs f t' a:word
+    else
+      execute 'cs f t' a:word
+    endif
   else
     execute 'Ack' a:word
   endif
@@ -103,7 +107,7 @@ nnoremap <Leader>p :GitFiles<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>m :Marks<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
-nnoremap <Leader>w :bdelete<CR>
+nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
@@ -126,15 +130,12 @@ nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>
 "   'i'   includes: find files that include the filename under cursor
 "   'd'   called: find functions that function under cursor calls
 nnoremap <Leader>ca :cs add cscope.out<CR>
-nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"))<CR><CR>
-nnoremap <Leader>cs :vertical scs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>cg :vertical scs find g <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>cc :vertical scs find c <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>ct :vertical scs find t <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>ce :vertical scs find e <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>cf :vertical scs find f <C-R>=expand("<cfile>")<CR><CR>
-nnoremap <Leader>ci :vertical scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nnoremap <Leader>cd :vertical scs find d <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"), 0)<CR><CR>
+nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>vt :call FallBackToAckIfNoCscope(expand("<cword>"), 1)<CR><CR>
+nnoremap <Leader>vs :vertical scs find s <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>vg :vertical scs find g <C-R>=expand("<cword>")<CR><CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 "http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make
 autocmd QuickFixCmdPost [^l]* nested cwindow
