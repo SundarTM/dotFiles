@@ -15,6 +15,7 @@ call plug#begin('~/.vim/plugged')
 
  Plug 'git://github.com/altercation/vim-colors-solarized'
  
+ Plug 'git://github.com/vim-scripts/scratch.vim'
  Plug 'git://github.com/chrisbra/NrrwRgn'
  Plug 'git://github.com/wellle/targets.vim'
  Plug 'git://github.com/rbgrouleff/bclose.vim'
@@ -32,7 +33,7 @@ function! DeleteHiddenBuffers()
   let tpbl=[]
   let closed = 0
   for buf in range(1, bufnr('$'))
-    if buflisted(buf) && (bufwinnr(buf) < 0)
+    if ( buf != bufnr(g:ScratchBufferName) ) && buflisted(buf) && (bufwinnr(buf) < 0)
       "hidden buffer
       silent execute 'bdelete' buf
       let closed += 1
