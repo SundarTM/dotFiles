@@ -17,6 +17,7 @@ call plug#begin('~/.vim/plugged')
  
  Plug 'git://github.com/vim-scripts/scratch.vim'
  Plug 'git://github.com/chrisbra/NrrwRgn'
+ Plug 'git://github.com/mbbill/undotree'
  Plug 'git://github.com/wellle/targets.vim'
  Plug 'git://github.com/rbgrouleff/bclose.vim'
  Plug 'git://github.com/AndrewRadev/undoquit.vim'
@@ -33,7 +34,7 @@ function! DeleteHiddenBuffers()
   let tpbl=[]
   let closed = 0
   for buf in range(1, bufnr('$'))
-    if ( buf != bufnr(g:ScratchBufferName) ) && buflisted(buf) && (bufwinnr(buf) < 0)
+    if ( buf != bufnr("__Scratch__") ) && buflisted(buf) && (bufwinnr(buf) < 0)
       "hidden buffer
       silent execute 'bdelete' buf
       let closed += 1
@@ -49,8 +50,19 @@ function! FallBackToAckIfNoCscope(word, openVertical)
     else
       execute 'cs f t' a:word
     endif
+  elseif executable('ag')
+    "a:openVertical == 1? execute 'Ag!' a:word : execute 'Ag' a:word
+    if a:openVertical
+      execute 'Ag!' a:word
+    else
+      execute 'Ag' a:word
+    endif
   else
-    execute 'Ack' a:word
+    if a:openVertical
+      execute 'Ack!' a:word
+    else
+      execute 'Ack' a:word
+    endif
   endif
 endfunction
 
@@ -78,6 +90,7 @@ set showmatch "highlights matching brace for a brief moment
 
 "Keeps the cursor in the middle while scrolling allows to see the contents above and below the cursor
 set scrolloff=10 
+set laststatus=2
 
 "color scheme, eyeCandy
 syntax enable 
@@ -102,6 +115,7 @@ cmap w!! w !sudo tee > /dev/null %
 map <SPACE> <Leader>
 
 nnoremap <Leader>u :GundoToggle<CR>
+nnoremap <Leader>U :UndotreeToggle<CR>
 
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>e :Files 
@@ -114,14 +128,36 @@ nnoremap <Leader>q :Bclose<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gd :Gvdiff<CR>
 nnoremap <Leader>gl :Glog<CR>
 
 nnoremap <Leader>du :diffupdate<CR>
 nnoremap <Leader>dh :call DeleteHiddenBuffers()<CR>
 
 nnoremap <Leader>fs :Ag! <C-R>=expand("<cword>")<CR><CR>	
-nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>	
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>fh :Files ~<CR>
+nnoremap <Leader>fv :execute 'e ' . resolve(expand($MYVIMRC))<CR>
+
+if has("cscope")
+  " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+  set cscopetag
+
+  " check cscope for definition of a symbol before checking ctags: set to 1
+  " if you want the reverse search order.
+  set csto=0
+
+  " add any cscope database in current directory
+  if filereadable("cscope.out")
+    cs add cscope.out  
+  " else add the database pointed to by environment variable 
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+
+  " show msg when any other cscope db added
+  set cscopeverbose  
+endif
 
 "   's'   symbol: find all references to the token under cursor
 "   'g'   global: find global definition(s) of the token under cursor
@@ -132,16 +168,19 @@ nnoremap <Leader>ff :AgFile! <C-R>=expand("<cfile>")<CR><CR>
 "   'i'   includes: find files that include the filename under cursor
 "   'd'   called: find functions that function under cursor calls
 nnoremap <Leader>ca :cs add cscope.out<CR>
-nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"), 0)<CR><CR>
-nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>vt :call FallBackToAckIfNoCscope(expand("<cword>"), 1)<CR><CR>
-nnoremap <Leader>vs :vertical scs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>vg :vertical scs find g <C-R>=expand("<cword>")<CR><CR>
+nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"), 0)<CR>
+nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR>
+nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR>
+nnoremap <Leader>vt :call FallBackToAckIfNoCscope(expand("<cword>"), 1)<CR>
+nnoremap <Leader>vs :vertical scs find s <C-R>=expand("<cword>")<CR>
+nnoremap <Leader>vg :vertical scs find g <C-R>=expand("<cword>")<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 "http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+augroup autoOpenQuickFix
+  autocmd!
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
+augroup END
 
 set number
 set relativenumber
