@@ -15,6 +15,8 @@ call plug#begin('~/.vim/plugged')
 
  Plug 'git://github.com/altercation/vim-colors-solarized'
  
+ Plug 'git://github.com/tyru/open-browser.vim'
+ Plug 'git://github.com/tyru/capture.vim'
  Plug 'git://github.com/vim-scripts/scratch.vim'
  Plug 'git://github.com/chrisbra/NrrwRgn'
  Plug 'git://github.com/mbbill/undotree'
@@ -28,6 +30,11 @@ call plug#end()
 let g:rsi_no_meta = 1
 let g:solarized_diffmode="high"
 "let g:solarized_termcolors=256
+
+""open-browser.vim
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 
 function! DeleteHiddenBuffers()
   "Tabs not cosidered. walks through entire Range
@@ -107,8 +114,14 @@ else
   colorscheme solarized 
 endif
 
+"-------------------------------------------------------------------------------
+" Custom Key Maps
+
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
+
+vnoremap < <gv
+vnoremap > >gv
 
 " nnoremap <SPACE> <Nop>
 " let mapleader = "\<Space>"
@@ -125,6 +138,7 @@ nnoremap <Leader>m :Marks<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
+nnoremap <Leader>y :reg<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>
@@ -155,8 +169,6 @@ if has("cscope")
     cs add $CSCOPE_DB
   endif
 
-  " show msg when any other cscope db added
-  set cscopeverbose  
 endif
 
 "   's'   symbol: find all references to the token under cursor
