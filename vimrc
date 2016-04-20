@@ -27,7 +27,7 @@ call plug#begin('~/.vim/plugged')
  "------------------------------------------------------------------------------
 call plug#end()
 
-let g:rsi_no_meta = 1
+"let g:rsi_no_meta = 1
 let g:solarized_diffmode="high"
 "let g:solarized_termcolors=256
 
@@ -182,7 +182,7 @@ endif
 nnoremap <Leader>ca :cs add cscope.out<CR>
 nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"), 0)<CR>
 nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR>
-nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR>
+nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
 nnoremap <Leader>vt :call FallBackToAckIfNoCscope(expand("<cword>"), 1)<CR>
 nnoremap <Leader>vs :vertical scs find s <C-R>=expand("<cword>")<CR>
 nnoremap <Leader>vg :vertical scs find g <C-R>=expand("<cword>")<CR>
@@ -193,6 +193,12 @@ augroup autoOpenQuickFix
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
+
+"-------------------------------------------------------------------------------
+" Recorded Macros
+
+"To bring up a vimdiff with next modified file in fugitive
+let @c = ' gsdv'
 
 set number
 set relativenumber
