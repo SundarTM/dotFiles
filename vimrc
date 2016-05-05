@@ -123,6 +123,11 @@ cmap w!! w !sudo tee > /dev/null %
 vnoremap < <gv
 vnoremap > >gv
 
+"inoremap <c-w> <c-g>u<c-w>
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-k> <c-o>d$
+inoremap <c-_> <c-o>u
+
 " nnoremap <SPACE> <Nop>
 " let mapleader = "\<Space>"
 map <SPACE> <Leader>
