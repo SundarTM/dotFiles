@@ -13,7 +13,10 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/rking/ag.vim'
  Plug 'git://github.com/ConradIrwin/vim-bracketed-paste'
 
- Plug 'git://github.com/altercation/vim-colors-solarized'
+ "Plug 'git://github.com/altercation/vim-colors-solarized'
+ Plug 'git://github.com/lifepillar/vim-solarized8'
+ Plug 'git://github.com/jnurmine/Zenburn'
+ Plug 'git://github.com/chriskempson/vim-tomorrow-theme'
  
  Plug 'git://github.com/tyru/open-browser.vim'
  Plug 'git://github.com/tyru/capture.vim'
@@ -101,17 +104,22 @@ set laststatus=2
 
 "color scheme, eyeCandy
 syntax enable 
+
+if has("termguicolors")
+  set termguicolors
+endif
+
 "highlight Comment ctermfg=cyan cterm=none
 
 if has('gui_running')
   set background=light
-  colorscheme solarized 
+  colorscheme solarized8_light
   set guioptions-=m  "remove menu bar
   set guioptions-=T  "remove toolbar
   set guioptions-=r  "remove right scroll bar
 else
   set background=dark
-  colorscheme solarized 
+  colorscheme Tomorrow-Night
 endif
 
 "-------------------------------------------------------------------------------
