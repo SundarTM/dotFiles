@@ -25,6 +25,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/tyru/capture.vim'
  Plug 'git://github.com/vim-scripts/scratch.vim'
  Plug 'git://github.com/chrisbra/NrrwRgn'
+ Plug 'git://github.com/majutsushi/tagbar'
  Plug 'git://github.com/mbbill/undotree'
  Plug 'git://github.com/wellle/targets.vim'
  Plug 'git://github.com/rbgrouleff/bclose.vim'
@@ -112,6 +113,8 @@ set laststatus=2
 syntax enable 
 
 if has("termguicolors")
+  let &t_8f="\e[38;2;%lu;%lu;%lum"
+  let &t_8b="\e[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
