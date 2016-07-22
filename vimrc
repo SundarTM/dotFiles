@@ -158,6 +158,7 @@ nnoremap <Leader>p :GitFiles<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>m :Marks<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
+nnoremap <Leader>t :TagbarToggle<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <Leader>y :reg<CR>
