@@ -26,6 +26,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/wellle/targets.vim'
  Plug 'git://github.com/rbgrouleff/bclose.vim'
  Plug 'git://github.com/AndrewRadev/undoquit.vim'
+ Plug 'git://github.com/nelstrom/vim-visual-star-search'
 
  "------------------------------------------------------------------------------
 call plug#end()
@@ -80,6 +81,8 @@ endfunction
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+set nrformats=hex
 
 "Search related
 set incsearch
