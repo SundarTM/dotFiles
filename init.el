@@ -23,6 +23,7 @@ Return a list of installed packages or nil for every skipped package."
          package)))
    packages))
 
+;; replace with use-package
 ;; Make sure to have downloaded archive description.
 ;(or (file-exists-p package-user-dir)
 ;    (package-refresh-contents))
@@ -85,15 +86,15 @@ Return a list of installed packages or nil for every skipped package."
 	 "m" 'evil-show-registers
 	 "d" 'dired-jump
    "q" 'kill-this-buffer
-   "w" 'kill-buffer-and-window
+   "w" 'evil-quit
 	 "a" 'ace-window
-	 "o" 'helm-swoop
+	 "s" 'helm-swoop
 	 "O" 'helm-multi-swoop-org
-	 "so" 'helm-multi-swoop-all
+	 "S" 'helm-multi-swoop-all
 	 "u" 'undo-tree-visualize
    "pp" 'helm-projectile-switch-project
 	 "pf" 'helm-projectile-find-file
-	 "po" 'helm-projectile-find-file-in-known-projects
+	 "o" 'helm-projectile-find-file-in-known-projects
 
 	 ;"t" 'helm-etags-select -- also with helm-find-files
 	 "y" 'helm-show-kill-ring

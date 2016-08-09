@@ -25,10 +25,12 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/tyru/capture.vim'
  Plug 'git://github.com/vim-scripts/scratch.vim'
  Plug 'git://github.com/chrisbra/NrrwRgn'
+ Plug 'git://github.com/majutsushi/tagbar'
  Plug 'git://github.com/mbbill/undotree'
  Plug 'git://github.com/wellle/targets.vim'
  Plug 'git://github.com/rbgrouleff/bclose.vim'
  Plug 'git://github.com/AndrewRadev/undoquit.vim'
+ Plug 'git://github.com/nelstrom/vim-visual-star-search'
 
  "------------------------------------------------------------------------------
 call plug#end()
@@ -84,6 +86,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+set nrformats=hex
+
 "Search related
 set incsearch
 set hlsearch
@@ -109,6 +113,8 @@ set laststatus=2
 syntax enable 
 
 if has("termguicolors")
+  let &t_8f="\e[38;2;%lu;%lu;%lum"
+  let &t_8b="\e[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
@@ -152,6 +158,7 @@ nnoremap <Leader>p :GitFiles<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>m :Marks<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
+nnoremap <Leader>t :TagbarToggle<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <Leader>y :reg<CR>
