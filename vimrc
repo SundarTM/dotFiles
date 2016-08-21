@@ -1,6 +1,8 @@
 "vim-plug installation
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs\
-"           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/tpope/vim-fugitive'
  Plug 'git://github.com/tpope/vim-repeat'
