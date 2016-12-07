@@ -126,6 +126,7 @@ if has("termguicolors")
   let &t_8b="\e[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+set mouse=
 
 "highlight Comment ctermfg=cyan cterm=none
 
@@ -148,6 +149,8 @@ cmap w!! w !sudo tee > /dev/null %
 
 vnoremap < <gv
 vnoremap > >gv
+
+nnoremap Y y$
 
 "inoremap <c-w> <c-g>u<c-w>
 inoremap <c-u> <c-g>u<c-u>
