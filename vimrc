@@ -15,6 +15,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'git://github.com/mileszs/ack.vim'
  Plug 'git://github.com/rking/ag.vim'
  Plug 'git://github.com/ConradIrwin/vim-bracketed-paste'
+ Plug 'git://github.com/osyo-manga/vim-anzu'
 
  "Plug 'git://github.com/altercation/vim-colors-solarized'
  Plug 'git://github.com/lifepillar/vim-solarized8'
@@ -43,6 +44,12 @@ let g:solarized_diffmode="high"
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
+
+""vim-anzu
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
 
 function! DeleteHiddenBuffers()
   "Tabs not cosidered. walks through entire Range
