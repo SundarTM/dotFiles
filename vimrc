@@ -126,7 +126,6 @@ if has("termguicolors")
   let &t_8b="\e[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-set mouse=
 
 "highlight Comment ctermfg=cyan cterm=none
 
@@ -242,6 +241,11 @@ set relativenumber
 "windo set noscrollbind
 "nmap <F5> :windo set scrollbind!<cr>
 
+if has('nvim') 
+  "disable mouse
+  set mouse=
+else
+  "Slow start time in terminal - X11 clipboard
 "Slow start time in terminal - X11 clipboard
 set clipboard=exclude:.*
 
