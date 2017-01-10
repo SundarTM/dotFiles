@@ -246,7 +246,7 @@ if has('nvim')
   set mouse=
 else
   "Slow start time in terminal - X11 clipboard
-"Slow start time in terminal - X11 clipboard
-set clipboard=exclude:.*
+  set clipboard=exclude:.*
+endif
 
 filetype plugin on 
