@@ -1,0 +1,39 @@
+[global_config]
+[keybindings]
+  hide_window = <Super>t
+  next_tab = <Primary><Shift>Right
+  prev_tab = <Primary><Shift>Left
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+  [[dropDown]]
+    [[[terminal0]]]
+      order = 0
+      parent = window0
+      profile = dropDown
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      position = 0:0
+      size = 1434, 709
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    copy_on_selection = True
+    cursor_color = "#aaaaaa"
+    font = DejaVu Sans Mono 12
+  [[dropDown]]
+    copy_on_selection = True
+    custom_command = tmux new -A -s startup
+    font = DejaVu Sans Mono 12
+    foreground_color = "#ffffff"
+    scrollbar_position = hidden
+    show_titlebar = False
+    use_custom_command = True
+    use_system_font = False
