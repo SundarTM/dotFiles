@@ -4,43 +4,56 @@
 "curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
- Plug 'git://github.com/tpope/vim-fugitive'
- Plug 'git://github.com/tpope/vim-repeat'
- Plug 'git://github.com/tpope/vim-surround'
- Plug 'git://github.com/tpope/vim-rsi' 
- Plug 'git://github.com/tpope/vim-commentary'
- Plug 'git://github.com/tpope/vim-unimpaired'
- Plug 'git://github.com/tpope/vim-dispatch'
- Plug 'git://github.com/sjl/gundo.vim'
- Plug 'git://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
- Plug 'git://github.com/junegunn/fzf.vim'
- Plug 'git://github.com/mileszs/ack.vim'
- Plug 'git://github.com/rking/ag.vim'
- Plug 'git://github.com/ConradIrwin/vim-bracketed-paste'
- Plug 'git://github.com/osyo-manga/vim-anzu'
+ Plug 'tpope/vim-fugitive'
+ Plug 'tpope/vim-repeat'
+ Plug 'tpope/vim-rsi' 
+ Plug 'tpope/vim-unimpaired'
+ Plug 'nelstrom/vim-visual-star-search'
 
- "Plug 'git://github.com/altercation/vim-colors-solarized'
- Plug 'git://github.com/lifepillar/vim-solarized8'
- Plug 'git://github.com/jnurmine/Zenburn'
- Plug 'git://github.com/chriskempson/vim-tomorrow-theme'
+ Plug 'tpope/vim-surround'
+ Plug 'tpope/vim-commentary'
+ Plug 'tommcdo/vim-exchange'
+ Plug 'tommcdo/vim-lion'
+ Plug 'wellle/targets.vim'
+
+ Plug 'sjl/gundo.vim'
+ Plug 'mbbill/undotree'
+ Plug 'rbgrouleff/bclose.vim'
+ Plug 'tyru/open-browser.vim'
+ Plug 'AndrewRadev/undoquit.vim'
+ Plug 'yssl/QFEnter'
+ Plug 'majutsushi/tagbar'
+ Plug 'osyo-manga/vim-anzu'
+ Plug 'romainl/vim-cool'
+ Plug 'junegunn/vim-peekaboo'
+ Plug 'tyru/capture.vim'
+ Plug 'chrisbra/NrrwRgn'
+ Plug 'tpope/vim-characterize'
+ Plug 'tpope/vim-speeddating'
+
+ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+ Plug 'junegunn/fzf.vim'
+ Plug 'srstevenson/vim-picker'
+ Plug 'mhinz/vim-grepper'
+
+ "Plug 'altercation/vim-colors-solarized'
+ Plug 'lifepillar/vim-solarized8'
+ Plug 'jnurmine/Zenburn'
+ Plug 'chriskempson/vim-tomorrow-theme'
  
- Plug 'git://github.com/tyru/open-browser.vim'
- Plug 'git://github.com/tyru/capture.vim'
- Plug 'git://github.com/vim-scripts/scratch.vim'
- Plug 'git://github.com/chrisbra/NrrwRgn'
- Plug 'git://github.com/majutsushi/tagbar'
- Plug 'git://github.com/mbbill/undotree'
- Plug 'git://github.com/wellle/targets.vim'
- Plug 'git://github.com/rbgrouleff/bclose.vim'
- Plug 'git://github.com/AndrewRadev/undoquit.vim'
- Plug 'git://github.com/nelstrom/vim-visual-star-search'
-
+ Plug 'vim-scripts/scratch.vim'
+ Plug 'terryma/vim-expand-region'
+ Plug 'ConradIrwin/vim-bracketed-paste'
+ " Plug 'romainl/vim-qf'
  "------------------------------------------------------------------------------
 call plug#end()
 
 "let g:rsi_no_meta = 1
 let g:solarized_diffmode="high"
 "let g:solarized_termcolors=256
+
+""vim-grepper
+let g:grepper = { 'tools': ['rg', 'ag', 'ack', 'grep'] }
 
 ""open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
@@ -53,42 +66,26 @@ nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 
-function! DeleteHiddenBuffers()
-  "Tabs not cosidered. walks through entire Range
-  let tpbl=[]
-  let closed = 0
-  for buf in range(1, bufnr('$'))
-    if ( buf != bufnr("__Scratch__") ) && buflisted(buf) && (bufwinnr(buf) < 0)
-      "hidden buffer
-      silent execute 'bdelete' buf
-      let closed += 1
-    endif
-  endfor
-  echo "Closed ".closed." hidden buffers"
-endfunction
-
-function! FallBackToAckIfNoCscope(word, openVertical)
+function! FallBackToGrepperIfNoCscope(word, openVertical)
   if cscope_connection()
     if a:openVertical
       execute 'vertical scs f t' a:word
     else
       execute 'cs f t' a:word
     endif
-  elseif executable('ag')
-    "a:openVertical == 1? execute 'Ag!' a:word : execute 'Ag' a:word
-    if a:openVertical
-      execute 'Ag!' a:word
-    else
-      execute 'Ag' a:word
-    endif
   else
-    if a:openVertical
-      execute 'Ack!' a:word
-    else
-      execute 'Ack' a:word
-    endif
+    execute 'Grepper -noprompt -cword'
   endif
 endfunction
+
+function! QuickfixToggle() "{{{
+    let nr = winnr("$")
+    cwindow
+    let nr2 = winnr("$")
+    if nr == nr2
+        cclose
+    endif
+endfunction "}}}
 
 "Tab related
 set tabstop=2
@@ -150,6 +147,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 nnoremap Y y$
+nmap gs  <plug>(GrepperOperator)
+xmap gs  <plug>(GrepperOperator)
 
 "inoremap <c-w> <c-g>u<c-w>
 inoremap <c-u> <c-g>u<c-u>
@@ -163,9 +162,8 @@ map <SPACE> <Leader>
 nnoremap <Leader>u :GundoToggle<CR>
 nnoremap <Leader>U :UndotreeToggle<CR>
 
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>e :Files 
-nnoremap <Leader>p :GitFiles<CR>
+nnoremap <Leader>b :PickerBuffer<CR>
+nnoremap <Leader>p :PickerEdit<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>m :Marks<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
@@ -173,6 +171,7 @@ nnoremap <Leader>t :TagbarToggle<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <Leader>y :reg<CR>
+nnoremap <Leader>z :call QuickfixToggle()<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>
@@ -180,11 +179,8 @@ nnoremap <Leader>gd :Gvdiff<CR>
 nnoremap <Leader>gl :Glog<CR>
 
 nnoremap <Leader>du :diffupdate<CR>
-nnoremap <Leader>dh :call DeleteHiddenBuffers()<CR>
 
-nnoremap <Leader>fs :Ag! <C-R>=expand("<cword>")<CR><CR>	
-nnoremap <Leader>ff :Files<CR>
-nnoremap <Leader>fh :Files ~<CR>
+nnoremap <Leader>fs :Grepper<CR>
 nnoremap <Leader>fv :execute 'e ' . resolve(expand($MYVIMRC))<CR>
 
 if has("cscope")
@@ -214,10 +210,10 @@ endif
 "   'i'   includes: find files that include the filename under cursor
 "   'd'   called: find functions that function under cursor calls
 nnoremap <Leader>ca :cs add cscope.out<CR>
-nnoremap <Leader>ct :call FallBackToAckIfNoCscope(expand("<cword>"), 0)<CR>
+nnoremap <Leader>ct :call FallBackToGrepperIfNoCscope(expand("<cword>"), 0)<CR>
 nnoremap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR>
 nnoremap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>vt :call FallBackToAckIfNoCscope(expand("<cword>"), 1)<CR>
+nnoremap <Leader>vt :call FallBackToGrepperIfNoCscope(expand("<cword>"), 1)<CR>
 nnoremap <Leader>vs :vertical scs find s <C-R>=expand("<cword>")<CR>
 nnoremap <Leader>vg :vertical scs find g <C-R>=expand("<cword>")<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-

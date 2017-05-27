@@ -6,3 +6,4 @@
 
 tilda&
 terminator --layout=dropDown -b&
+emacs --daemon

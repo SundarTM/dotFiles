@@ -17,7 +17,7 @@
 	(package-install 'use-package))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;; evil-escape evil-embrace evil-matchit evil-exchange evil-snipe emacs-vdiff
 (use-package try
 	:ensure t)
 
@@ -78,6 +78,8 @@
 						(define-key evil-motion-state-map (kbd "+") 'er/expand-region)
 						(define-key evil-insert-state-map "\C-r" #'evil-paste-from-register)
 						(define-key evil-ex-completion-map "\C-r" #'evil-paste-from-register)
+						(define-key evil-normal-state-map (kbd "gx") 'browse-url-at-point)
+						(define-key evil-visual-state-map (kbd "gx") 'search-google)
 						))
 
 (use-package evil-anzu
@@ -178,9 +180,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-related
 (org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)))
-
+ 'org-babel-load-languages '(
+			(python . t)
+			(ditaa . t)
+	)
+ )
+(setq org-ditaa-jar-path "/local/share/ditaa.jar")
 ;; prevent demoting heading also shifting text inside sections
 (setq org-adapt-indentation nil)
 
@@ -229,6 +234,16 @@
 
 ;;bind to key
 (define-key org-mode-map (kbd "C-<") 'org-begin-template)
+
+(defun search-google ()
+  "Google the selected region if any, display a query prompt otherwise."
+  (interactive)
+  (browse-url
+   (concat
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+    (url-hexify-string (if mark-active
+                           (buffer-substring (region-beginning) (region-end))
+                         (read-string "Search Google: "))))))
 
 ;;;;Mac Specific
 (add-to-list 'exec-path "/usr/local/bin/")

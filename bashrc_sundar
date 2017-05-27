@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 export EDITOR=vim
-export PATH=$PATH:${WS}/myApps/bin
+export PATH=$PATH:~/myApps/bin
 
 alias ls='ls --color=auto'
 PS1='[\u@\h:\w]> '
