@@ -240,6 +240,7 @@ set relativenumber
 if has('nvim') 
   "disable mouse
   set mouse=
+  set inccommand=split
 else
   "Slow start time in terminal - X11 clipboard
   set clipboard=exclude:.*
