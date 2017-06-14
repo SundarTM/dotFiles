@@ -44,6 +44,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'vim-scripts/scratch.vim'
  Plug 'terryma/vim-expand-region'
  Plug 'ConradIrwin/vim-bracketed-paste'
+ Plug 'unblevable/quick-scope'
  " Plug 'romainl/vim-qf'
  "------------------------------------------------------------------------------
 call plug#end()
@@ -54,6 +55,9 @@ let g:solarized_diffmode="high"
 
 ""vim-grepper
 let g:grepper = { 'tools': ['rg', 'ag', 'ack', 'grep'] }
+
+""quick-scope
+let g:qs_highlight_on_keys = ['f', 'F']
 
 ""open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.

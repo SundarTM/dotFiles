@@ -17,7 +17,7 @@
 	(package-install 'use-package))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; evil-escape evil-embrace evil-matchit evil-exchange evil-snipe emacs-vdiff
+;; evil-escape evil-embrace evil-matchit evil-exchange emacs-vdiff
 (use-package try
 	:ensure t)
 
@@ -72,7 +72,6 @@
 (use-package evil
 	:ensure t
 	:init
-	(setq evil-cross-lines t)
 	(evil-mode t)
 	:config (progn
 						(define-key evil-motion-state-map (kbd "+") 'er/expand-region)
@@ -89,6 +88,11 @@
 	:ensure t
   :init (global-evil-visualstar-mode))
 
+(use-package evil-rsi
+  :ensure t
+	:diminish evil-rsi-mode
+	:config (evil-rsi-mode))
+
 (use-package evil-surround
 	:ensure t
   :config (global-evil-surround-mode))
@@ -103,15 +107,21 @@
 	:config (setq smooth-scroll-margin 5)
 	(smooth-scrolling-mode))
 
-(use-package volatile-highlights
-	:ensure t
-	:diminish volatile-highlights-mode
-	:config
-	(vhl/define-extension 'my-evil-highlights
-												'evil-yank-line 'evil-yank
-												'evil-delete 'evil-paste-after 'evil-paste-before)
-	(vhl/install-extension 'my-evil-highlights)
-	(volatile-highlights-mode t))
+(use-package evil-goggles
+  :ensure t
+	:diminish evil-goggles-mode
+  :config
+  (setq evil-goggles-duration 0.100)	
+  (evil-goggles-mode))
+
+;;req custom fix -> disable t & T -> F choose candidate from begining of word
+(use-package evil-quickscope
+  :ensure t
+  :config
+  (global-evil-quickscope-mode 1)
+	;; (global-evil-quickscope-always-mode 1)
+	)
+
 
 (use-package undo-tree
 	:diminish undo-tree-mode
