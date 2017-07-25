@@ -101,6 +101,7 @@ set nrformats=hex
 "Search related
 set incsearch
 set hlsearch
+set ignorecase
 set smartcase
 
 set backspace=indent,eol,start
@@ -154,6 +155,11 @@ nnoremap Y y$
 nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
 
+" run a macro
+nnoremap Q @q
+" run a macro on visually selected lines
+xnoremap Q :normal @q <CR>
+
 "inoremap <c-w> <c-g>u<c-w>
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-k> <c-o>d$
@@ -174,13 +180,14 @@ nnoremap <Leader>r :source ~/.vimrc<CR>
 nnoremap <Leader>t :TagbarToggle<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
-nnoremap <Leader>y :reg<CR>
 nnoremap <Leader>z :call QuickfixToggle()<CR>
+nnoremap <Leader>/ :Grepper -buffer -noprompt -query '<C-r>/'<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gvdiff<CR>
-nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gl :Git! log<CR>
+nnoremap <Leader>gh :Glog<CR>
 
 nnoremap <Leader>du :diffupdate<CR>
 

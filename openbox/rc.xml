@@ -4,16 +4,16 @@
         Copy the file to $HOME/.config/openbox/ instead. -->
 
 <openbox_config xmlns="http://openbox.org/3.4/rc"
-		xmlns:xi="http://www.w3.org/2001/XInclude">
+  xmlns:xi="http://www.w3.org/2001/XInclude">
 
-<resistance>
-  <strength>10</strength>
-  <screen_edge_strength>20</screen_edge_strength>
-</resistance>
+  <resistance>
+    <strength>10</strength>
+    <screen_edge_strength>20</screen_edge_strength>
+  </resistance>
 
-<focus>
-  <focusNew>yes</focusNew>
-  <!-- always try to focus new windows when they appear. other rules do
+  <focus>
+    <focusNew>yes</focusNew>
+    <!-- always try to focus new windows when they appear. other rules do
        apply -->
   <followMouse>no</followMouse>
   <!-- move focus to a window when you move the mouse into it -->
@@ -198,7 +198,7 @@
   </keybind>
   <keybind key="W-x">
     <action name="Exit">
-        <prompt>no</prompt>
+      <prompt>no</prompt>
     </action>
   </keybind>
 
@@ -246,18 +246,18 @@
   </keybind>
   <keybind key="W-minus">
     <action name="ResizeRelative">
-    <bottom>-3</bottom>
-    <top>-3</top>
-    <left>-5</left>
-    <right>-5</right>
+      <bottom>-3</bottom>
+      <top>-3</top>
+      <left>-5</left>
+      <right>-5</right>
     </action>
   </keybind>
   <keybind key="W-plus">
     <action name="ResizeRelative">
-    <bottom>3</bottom>
-    <top>3</top>
-    <left>5</left>
-    <right>5</right>
+      <bottom>3</bottom>
+      <top>3</top>
+      <left>5</left>
+      <right>5</right>
     </action>
   </keybind>
   <keybind key="A-space">
@@ -285,16 +285,6 @@
   </keybind>
   <keybind key="A-S-Tab">
     <action name="PreviousWindow">
-      <finalactions>
-        <action name="Focus"/>
-        <action name="Raise"/>
-        <action name="Unshade"/>
-      </finalactions>
-    </action>
-  </keybind>
-  <keybind key="C-A-Tab">
-    <action name="NextWindow">
-      <panels>yes</panels><desktop>yes</desktop>
       <finalactions>
         <action name="Focus"/>
         <action name="Raise"/>
@@ -344,6 +334,11 @@
   <keybind key="W-o">
     <action name="Execute">
       <command>emacsclient -a "" -c</command>
+    </action>
+  </keybind>
+  <keybind key="W-space">
+    <action name="Execute">
+      <command>rofi -kb-row-up 'Up,Control+p,ISO_Left_Tab' -kb-delete-entry 'Control+Delete,Control+Left' -show run</command>
     </action>
   </keybind>
   <keybind key="W-e">
