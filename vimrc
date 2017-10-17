@@ -5,8 +5,10 @@
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
  Plug 'tpope/vim-fugitive'
+ Plug 'junegunn/gv.vim'
+
  Plug 'tpope/vim-repeat'
- Plug 'tpope/vim-rsi' 
+ Plug 'tpope/vim-rsi'
  Plug 'tpope/vim-unimpaired'
  Plug 'nelstrom/vim-visual-star-search'
 
@@ -40,7 +42,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'lifepillar/vim-solarized8'
  Plug 'jnurmine/Zenburn'
  Plug 'chriskempson/vim-tomorrow-theme'
- 
+
  Plug 'vim-scripts/scratch.vim'
  Plug 'terryma/vim-expand-region'
  Plug 'ConradIrwin/vim-bracketed-paste'
@@ -117,11 +119,11 @@ set ruler     " shows line no, posn, etc
 set showmatch "highlights matching brace for a brief moment
 
 "Keeps the cursor in the middle while scrolling allows to see the contents above and below the cursor
-set scrolloff=10 
+set scrolloff=10
 set laststatus=2
 
 "color scheme, eyeCandy
-syntax enable 
+syntax enable
 
 if has("termguicolors")
   let &t_8f="\e[38;2;%lu;%lu;%lum"
@@ -186,7 +188,8 @@ nnoremap <Leader>/ :Grepper -buffer -noprompt -query '<C-r>/'<CR>
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gvdiff<CR>
-nnoremap <Leader>gl :Git! log<CR>
+nnoremap <Leader>gl :GV<CR>
+nnoremap <Leader>gf :GV!<CR>
 nnoremap <Leader>gh :Glog<CR>
 
 nnoremap <Leader>du :diffupdate<CR>
@@ -204,8 +207,8 @@ if has("cscope")
 
   " add any cscope database in current directory
   if filereadable("cscope.out")
-    cs add cscope.out  
-  " else add the database pointed to by environment variable 
+    cs add cscope.out
+  " else add the database pointed to by environment variable
   elseif $CSCOPE_DB != ""
     cs add $CSCOPE_DB
   endif
@@ -248,7 +251,7 @@ set relativenumber
 "windo set noscrollbind
 "nmap <F5> :windo set scrollbind!<cr>
 
-if has('nvim') 
+if has('nvim')
   "disable mouse
   set mouse=
   set inccommand=split
@@ -257,4 +260,5 @@ else
   set clipboard=exclude:.*
 endif
 
-filetype plugin on 
+filetype plugin on
+
