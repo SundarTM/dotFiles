@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 
  Plug 'tpope/vim-repeat'
  Plug 'tpope/vim-rsi'
+ Plug 'tpope/vim-eunuch'
  Plug 'tpope/vim-unimpaired'
  Plug 'nelstrom/vim-visual-star-search'
 
@@ -71,6 +72,17 @@ nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
+
+function! ShowMatchesForLastSearch() "{{{
+  let search = getreg('/')
+  " remove vim regular expression syntax
+  " remove \< \> \V
+  let search = substitute(search, '\(\\<\|\\>\|\\V\)', '', 'g')
+  " remove \/
+  let search = substitute(search, '\\/', '/', 'g')
+  let search = '"' . search . '"'
+  execute 'Grepper -buffer -noprompt -query' search
+endfunction "}}}
 
 function! FallBackToGrepperIfNoCscope(word, openVertical)
   if cscope_connection()
@@ -183,7 +195,7 @@ nnoremap <Leader>t :TagbarToggle<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <Leader>z :call QuickfixToggle()<CR>
-nnoremap <Leader>/ :Grepper -buffer -noprompt -query '<C-r>/'<CR>
+nnoremap <Leader>/ :call ShowMatchesForLastSearch()<CR>
 
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gs :Gstatus<CR>

@@ -12,6 +12,7 @@ alias ls='ls --color=auto'
 PS1='[\u@\h:\w]> '
 
 alias thun='cd ${WS}'
+alias cpp='cp --parent'
 
 alias csc="${WS}/scripts/mk_cscope"
 alias xstartx="${WS}/scripts/xstartx"
