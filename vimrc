@@ -105,6 +105,11 @@ function! QuickfixToggle() "{{{
     endif
 endfunction "}}}
 
+
+"Folding in Xml file
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+
 "Tab related
 set tabstop=2
 set shiftwidth=2
