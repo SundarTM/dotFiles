@@ -13,11 +13,18 @@ call plug#begin('~/.vim/plugged')
  Plug 'tpope/vim-unimpaired'
  Plug 'nelstrom/vim-visual-star-search'
 
- Plug 'tpope/vim-surround'
+ Plug 'machakann/vim-sandwich'
  Plug 'tpope/vim-commentary'
  Plug 'tommcdo/vim-exchange'
- Plug 'tommcdo/vim-lion'
+ Plug 'junegunn/vim-easy-align'
+
  Plug 'wellle/targets.vim'
+ Plug 'kana/vim-textobj-user'
+ Plug 'kana/vim-textobj-line'
+ Plug 'kana/vim-textobj-entire'
+ Plug 'kana/vim-textobj-indent'
+ " Plug 'kana/vim-textobj-function'
+ Plug 'coderifous/textobj-word-column.vim'
 
  Plug 'sjl/gundo.vim'
  Plug 'mbbill/undotree'
@@ -48,6 +55,8 @@ call plug#begin('~/.vim/plugged')
  Plug 'terryma/vim-expand-region'
  Plug 'ConradIrwin/vim-bracketed-paste'
  Plug 'unblevable/quick-scope'
+ "Plug 'dyng/ctrlsf.vim'
+
  " Plug 'romainl/vim-qf'
  "------------------------------------------------------------------------------
 call plug#end()
@@ -196,7 +205,7 @@ nnoremap <Leader>p :PickerEdit<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>m :Marks<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
-nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <Leader>t :tabclose<CR>
 nnoremap <Leader>w :q<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <Leader>z :call QuickfixToggle()<CR>
@@ -207,7 +216,9 @@ nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gvdiff<CR>
 nnoremap <Leader>gl :GV<CR>
 nnoremap <Leader>gf :GV!<CR>
-nnoremap <Leader>gh :Glog<CR>
+nnoremap <Leader>gh :GV?<CR>
+vmap <Leader>gf :GV<CR>
+vmap <Leader>gl :GV?<CR>
 
 nnoremap <Leader>du :diffupdate<CR>
 
