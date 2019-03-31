@@ -140,6 +140,13 @@ set smartindent
 set cindent
 set smarttab
 
+set linebreak breakindent
+set list listchars=tab:>>,trail:~
+if has('multi_byte')
+    set listchars=tab:»»,trail:•
+    set fillchars=vert:┃ showbreak=↪
+endif
+
 set showcmd
 set ruler     " shows line no, posn, etc
 set showmatch "highlights matching brace for a brief moment

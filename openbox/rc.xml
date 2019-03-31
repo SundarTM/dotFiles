@@ -203,18 +203,6 @@
   </keybind>
 
   <!-- Keybindings for desktop switching -->
-  <keybind key="W-Left">
-    <action name="GoToDesktop"><to>left</to><wrap>yes</wrap></action>
-  </keybind>
-  <keybind key="W-Right">
-    <action name="GoToDesktop"><to>right</to><wrap>yes</wrap></action>
-  </keybind>
-  <keybind key="W-A-Left">
-    <action name="SendToDesktop"><to>left</to><wrap>yes</wrap></action>
-  </keybind>
-  <keybind key="W-A-Right">
-    <action name="SendToDesktop"><to>right</to><wrap>yes</wrap></action>
-  </keybind>
   <keybind key="W-1">
     <action name="GoToDesktop"><to>1</to></action>
   </keybind>
@@ -227,22 +215,40 @@
   <keybind key="W-4">
     <action name="GoToDesktop"><to>4</to></action>
   </keybind>
+  <keybind key="W-p">
+    <action name="GoToDesktop"><to>left</to><wrap>yes</wrap></action>
+  </keybind>
+  <keybind key="W-n">
+    <action name="GoToDesktop"><to>right</to><wrap>yes</wrap></action>
+  </keybind>
+  <keybind key="W-A-p">
+    <action name="SendToDesktop"><to>left</to><wrap>yes</wrap></action>
+  </keybind>
+  <keybind key="W-A-n">
+    <action name="SendToDesktop"><to>right</to><wrap>yes</wrap></action>
+  </keybind>
+  <keybind key="W-A-1">
+    <action name="SendToDesktop"><to>1</to></action>
+  </keybind>
+  <keybind key="W-A-2">
+    <action name="SendToDesktop"><to>2</to></action>
+  </keybind>
+  <keybind key="W-A-3">
+    <action name="SendToDesktop"><to>3</to></action>
+  </keybind>
+  <keybind key="W-A-4">
+    <action name="SendToDesktop"><to>4</to></action>
+  </keybind>
+
+  <!-- Keybindings for window resizing -->
   <keybind key="W-d">
     <action name="ToggleShowDesktop"/>
   </keybind>
-
-  <!-- Keybindings for windows -->
-  <keybind key="A-F4">
-    <action name="Close"/>
-  </keybind>
-  <keybind key="W-w">
-    <action name="Close"/>
+  <keybind key="W-Return">
+    <action name="ToggleFullscreen"/>
   </keybind>
   <keybind key="W-m">
     <action name="Iconify"/>
-  </keybind>
-  <keybind key="W-Return">
-    <action name="ToggleFullscreen"/>
   </keybind>
   <keybind key="W-minus">
     <action name="ResizeRelative">
@@ -259,6 +265,141 @@
       <left>5</left>
       <right>5</right>
     </action>
+  </keybind>
+
+  <!-- Keybindings for window positioning -->
+  <keybind key="W-Left">
+    <action name="UnmaximizeFull"/>
+    <action name="MaximizeVert"/>
+    <action name="MoveResizeTo">
+      <width>50%</width>
+    </action>
+    <action name="MoveToEdgeWest"/>
+  </keybind>
+  <keybind key="W-Right">
+    <action name="UnmaximizeFull"/>
+    <action name="MaximizeVert"/>
+    <action name="MoveResizeTo">
+      <width>50%</width>
+    </action>
+    <action name="MoveToEdgeEast"/>
+  </keybind>
+  <keybind key="W-Up">
+    <action name="UnmaximizeFull"/>
+    <action name="MaximizeHorizontal"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>0</y>
+      <width>100%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-Down">
+    <action name="UnmaximizeFull"/>
+    <action name="MaximizeHorizontal"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>-0</y>
+      <width>100%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-0">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <width>80%</width>
+      <height>80%</height>
+    </action>
+    <action name="MoveToCenter"/>
+  </keybind>
+  <keybind key="W-KP_1">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>-0</y>
+      <width>50%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_2">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>-0</y>
+      <width>100%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_3">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>-0</x>
+      <y>-0</y>
+      <width>50%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_4">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>0</y>
+      <width>50%</width>
+      <height>100%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_5">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>-0</x>
+      <y>0</y>
+      <width>100%</width>
+      <height>100%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_6">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>-0</x>
+      <y>0</y>
+      <width>50%</width>
+      <height>100%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_7">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>0</y>
+      <width>50%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_8">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>0</x>
+      <y>0</y>
+      <width>100%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+  <keybind key="W-KP_9">
+    <action name="UnmaximizeFull"/>
+    <action name="MoveResizeTo">
+      <x>-0</x>
+      <y>0</y>
+      <width>50%</width>
+      <height>50%</height>
+    </action>
+  </keybind>
+
+  <!-- Keybindings for windows -->
+  <keybind key="A-F4">
+    <action name="Close"/>
+  </keybind>
+  <keybind key="W-w">
+    <action name="Close"/>
   </keybind>
   <keybind key="A-space">
     <action name="ShowMenu"><menu>client-menu</menu></action>
@@ -336,14 +477,14 @@
       <command>emacsclient -a "" -c</command>
     </action>
   </keybind>
-  <keybind key="W-space">
-    <action name="Execute">
-      <command>rofi -kb-row-up 'Up,Control+p,ISO_Left_Tab' -kb-delete-entry 'Control+Delete,Control+Left' -show run</command>
-    </action>
-  </keybind>
   <keybind key="W-e">
     <action name="Execute">
       <command>emacs</command>
+    </action>
+  </keybind>
+  <keybind key="W-space">
+    <action name="Execute">
+      <command>rofi -kb-row-up 'Up,Control+p,ISO_Left_Tab' -kb-delete-entry 'Control+Delete,Control+Left' -show run</command>
     </action>
   </keybind>
 </keyboard>
@@ -366,19 +507,16 @@
       <action name="Focus"/>
       <action name="Raise"/>
     </mousebind>
-    <mousebind button="A-Left" action="Click">
-      <action name="Unshade"/>
-    </mousebind>
     <mousebind button="A-Left" action="Drag">
       <action name="Move"/>
     </mousebind>
 
-    <mousebind button="S-A-Left" action="Press">
+    <mousebind button="A-Right" action="Press">
       <action name="Focus"/>
       <action name="Raise"/>
       <action name="Unshade"/>
     </mousebind>
-    <mousebind button="S-A-Left" action="Drag">
+    <mousebind button="A-Right" action="Drag">
       <action name="Resize"/>
     </mousebind> 
   </context>
