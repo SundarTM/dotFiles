@@ -218,9 +218,9 @@ nnoremap <Leader>q :Bclose<CR>
 nnoremap <Leader>z :call QuickfixToggle()<CR>
 nnoremap <Leader>/ :call ShowMatchesForLastSearch()<CR>
 
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gvdiff<CR>
+nnoremap <Leader>gb :Git blame<CR>
+nnoremap <Leader>gs :Git<CR>
+nnoremap <Leader>gd :Gvdiffsplit<CR>
 nnoremap <Leader>gl :GV<CR>
 nnoremap <Leader>gf :GV!<CR>
 nnoremap <Leader>gh :GV?<CR>
