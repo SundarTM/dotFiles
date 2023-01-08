@@ -23,7 +23,6 @@ call plug#begin('~/.vim/plugged')
  Plug 'kana/vim-textobj-line'
  Plug 'kana/vim-textobj-entire'
  Plug 'kana/vim-textobj-indent'
- " Plug 'kana/vim-textobj-function'
  Plug 'coderifous/textobj-word-column.vim'
 
  Plug 'sjl/gundo.vim'
@@ -46,7 +45,6 @@ call plug#begin('~/.vim/plugged')
  Plug 'srstevenson/vim-picker'
  Plug 'mhinz/vim-grepper'
 
- "Plug 'altercation/vim-colors-solarized'
  Plug 'lifepillar/vim-solarized8'
  Plug 'jnurmine/Zenburn'
  Plug 'chriskempson/vim-tomorrow-theme'
